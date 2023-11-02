@@ -3,14 +3,51 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './components/login/login.component';
+import { StoreModule } from '@ngrx/store';
+import { authReducer } from './store/auth/auth.reducer';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
+import { authEffects } from './store/auth/auth.effects';
+import { HomeComponent } from './components/home/home.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { messageReducer } from './store/message/message.reducer';
+import { MessageEffects } from './store/message/message.effects';
+import { toasterReducer } from './store/toaster/toaster.reducer';
+import { ToasterEffects } from './store/toaster/toaster.effects';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StoreModule.forRoot({authUser: authReducer}, {}),
+    StoreModule.forFeature('message',messageReducer),
+    StoreModule.forFeature('toaster', toasterReducer),
+    EffectsModule.forRoot([authEffects]),
+    EffectsModule.forFeature([MessageEffects]),
+    EffectsModule.forFeature([ToasterEffects]),
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: false,
+      features: {
+        pause: false,
+        lock: true,
+        persist: true
+      }
+    }),
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,15 @@
+<div class="container mt-3">
+    <h2>Login Form</h2>
+    <form [formGroup]="myForm" (ngSubmit)="login(myForm.value)">
+      <div class="mb-3 mt-3">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" placeholder="Enter username" formControlName="username">
+      </div>
+      <div class="mb-3">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" placeholder="Enter password" formControlName="password">
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
+    </form>
+      
+  </div>

@@ -12,7 +12,6 @@ export class ToasterEffects {
     toasterMessage$ = createEffect(() => 
         this.action$.pipe (
             ofType(ToasterActions.success),
-            tap((action) => console.log(action)),
             tap((action) => this._snackbar.open(action.message, '', {duration: 3000}))
         ), {dispatch: false}
     )
@@ -20,14 +19,7 @@ export class ToasterEffects {
     errortoasterMessage$ = createEffect(() => 
         this.action$.pipe (
             ofType(ToasterActions.error),
-            tap((action) => console.log(action)),
             tap((action) => this._snackbar.open(action.message, '', {duration: 3000}))
         ), {dispatch: false}
     )
-
-    // failureToaster$ = createEffect(() => 
-    //     this.action$.pipe(
-    //         ofType(toasterActions.)
-    //     )
-    // )
 }

@@ -1,6 +1,14 @@
-import { createAction, props } from "@ngrx/store";
-import { USER } from "src/app/interfaces/user";
+import { createAction, createActionGroup, emptyProps, props } from "@ngrx/store";
 
-export const login = createAction('[Auth] Login', props<{authUser: USER}>());
-export const loginSuccess = createAction('[Auth] Login Success');
-export const loginFailure = createAction('[Auth] Login Failure', props<{error: string}>());
+export const AuthActions = createActionGroup({
+        source: 'Logout',
+        events: {
+        'Login': props<{username: string, password: string, isManually: boolean}>(),
+        'Login Success': props<{isManually: boolean,username: string}>(),
+        'Login Failure': props<{error: string}>(),
+        'logout': props<{isLoggedIn: boolean}>(),
+        'logout success': emptyProps(),
+        'logout failure': props<{error: string}>(),
+        'NoAction': emptyProps
+    }
+})

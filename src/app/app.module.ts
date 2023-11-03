@@ -14,25 +14,26 @@ import { HomeComponent } from './components/home/home.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { messageReducer } from './store/message/message.reducer';
-import { MessageEffects } from './store/message/message.effects';
 import { toasterReducer } from './store/toaster/toaster.reducer';
 import { ToasterEffects } from './store/toaster/toaster.effects';
+import { AppState } from './store/app.state';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({authUser: authReducer}, {}),
-    StoreModule.forFeature('message',messageReducer),
-    StoreModule.forFeature('toaster', toasterReducer),
+    StoreModule.forRoot<AppState>({
+      auth: authReducer,
+      toaster: toasterReducer
+    }),
     EffectsModule.forRoot([authEffects]),
-    EffectsModule.forFeature([MessageEffects]),
     EffectsModule.forFeature([ToasterEffects]),
     HttpClientModule,
     FormsModule,

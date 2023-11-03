@@ -1,16 +1,12 @@
 import { createReducer, on, Action } from "@ngrx/store";
 import { ToasterActions } from "./toaster.actions";
+import { ToasterState } from "./toaster.state";
 
-export interface ShowToaster {
-    message: string | null;
-    
-}
-
-const initialState: ShowToaster = {
+const initialState: ToasterState = {
     message: null,
 }
 
-const _toasterReducer = createReducer(
+const _toasterReducer = createReducer<ToasterState>(
     initialState,
     on(ToasterActions.success, (state, {message}) => ({
         ...state, message
@@ -20,6 +16,6 @@ const _toasterReducer = createReducer(
     }))
 )
 
-export function toasterReducer(state: ShowToaster, action: Action) {
+export function toasterReducer(state: ToasterState | undefined, action: Action) {
     return _toasterReducer(state, action)
 }

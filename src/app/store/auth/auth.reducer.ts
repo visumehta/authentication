@@ -1,29 +1,32 @@
 import { createReducer, on, Action } from "@ngrx/store";
-import { USER } from "src/app/interfaces/user";
-import * as authActions from "./auth.actions";
+// import * as authActions from "./auth.actions";
+import { AuthState } from "./auth.state";
+import { AuthActions } from "./auth.actions";
+// import { Logout } from './auth.actions';
 
-export interface authState {
-    formData: USER[] | null;
-    isLoggedIn: boolean;
-    error: string | null;
-}
-
-const initialState: authState = {
-    formData: [],
+const initialState: AuthState = {
+    username: null,
+    password: null,
     isLoggedIn:false,
     error: null
 }
 
-const _authReducer = createReducer<authState>(
+const _authReducer = createReducer<AuthState>(
     initialState,
-    on (authActions.loginSuccess, (state) => ({
-        ...state, isLoggedIn: true, error: null
+    on (AuthActions.loginSuccess, (state, {username}) => ({
+        ...state, isLoggedIn: true, error: null, username
     })),
-    on (authActions.loginFailure, (state, {error}) => ({
+    on (AuthActions.loginFailure, (state, {error}) => ({
         ...state, isLoggedIn: false, error:error
+    })),
+    on(AuthActions.logoutSuccess, (state) => ({
+        ...state
+    })),
+    on(AuthActions.logoutFailure, (state, {error}) => ({
+        ...state, error: error
     }))
 )
 
-export function authReducer(state: authState | undefined, action: Action) {
+export function authReducer(state: AuthState | undefined, action: Action) {        
     return _authReducer(state, action)
 }

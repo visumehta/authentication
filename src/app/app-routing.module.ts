@@ -5,9 +5,10 @@ import { authGuard } from './guard/auth.guard';
 import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
+  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   { path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent, canActivate: [authGuard]}
+  { path: 'entity', loadChildren: () => import('./modules/ngrx-with-entity/ngrx-with-entity.module').then((m) => m.NgrxWithEntityModule)}
 ];
 
 @NgModule({

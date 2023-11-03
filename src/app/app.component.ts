@@ -3,10 +3,19 @@ import { Store } from "@ngrx/store";
 import { AppState } from "./store/app.state";
 import * as authActions from "./store/auth/auth.actions";
 import { AuthFacade } from "./store/auth/auth.facade";
+import { CommonModule } from "@angular/common";
+import { HeaderComponent } from "./components/header/header.component";
+import { RouterModule } from "@angular/router";
 
 @Component({
   selector: "app-root",
-  templateUrl: "./app.component.html",
+  standalone : true,
+  imports:[
+    CommonModule,
+    HeaderComponent,
+    RouterModule
+  ],
+  templateUrl: "./app.component.html", 
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements OnInit {
